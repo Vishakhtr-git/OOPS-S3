@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+class BankAccount {
+
+    int accountNumber;
+    String accountHolder;
+    double balance;
+
+    BankAccount(int number, String holder, double bal) {
+        accountNumber = number;
+        accountHolder = holder;
+        balance = bal;
+    }
+
+    void deposit(double amount) {
+        balance = balance + amount;
+    }
+
+    void displayDetails() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolder);
+        System.out.println("Balance: " + balance);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter account number: ");
+        int number = sc.nextInt();
+
+        System.out.print("Enter account holder name: ");
+        String holder = sc.next();
+
+        System.out.print("Enter initial balance: ");
+        double balance = sc.nextDouble();
+
+        BankAccount account = new BankAccount(number, holder, balance);
+
+        System.out.print("Enter deposit amount: ");
+        double amount = sc.nextDouble();
+
+        account.deposit(amount);
+
+        System.out.println("\nUpdated Account Details:");
+
+        account.displayDetails();
+    }
+}
