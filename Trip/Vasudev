@@ -1,1 +1,161 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
 
+public class Vasudev extends JFrame implements ActionListener
+{
+    JTextField t1, t2, t3, t4, t5;
+    JTextArea a1, a2;
+    JButton ai, ci, ad, rm, mp, re;
+
+    Vasudev()
+    {
+        JFrame f = new JFrame("TripMate - Itinerary and Packing");
+        JPanel p = new JPanel();
+        p.setLayout(new GridLayout(10, 2));
+
+        JLabel l1 = new JLabel("Day Number");
+        t1 = new JTextField();
+        JLabel l2 = new JLabel("Time Slot");
+        t2 = new JTextField();
+        JLabel l3 = new JLabel("Place / Activity");
+        t3 = new JTextField();
+
+        ai = new JButton("Add to Itinerary");
+        ci = new JButton("Clear Itinerary");
+
+        JLabel l4 = new JLabel("Packing Item");
+        t4 = new JTextField();
+
+        ad = new JButton("Add Item");
+        rm = new JButton("Remove Item");
+        mp = new JButton("Mark Packed");
+        re = new JButton("Reset All");
+
+        JLabel l5 = new JLabel("Itinerary");
+        a1 = new JTextArea();
+        a1.setEditable(false);
+        JLabel l6 = new JLabel("Packing List");
+        a2 = new JTextArea();
+        a2.setEditable(false);
+
+        JLabel l7 = new JLabel("Status");
+        t5 = new JTextField();
+
+        p.add(l1); p.add(t1);
+        p.add(l2); p.add(t2);
+        p.add(l3); p.add(t3);
+        p.add(ai); p.add(ci);
+        p.add(l4); p.add(t4);
+        p.add(ad); p.add(rm);
+        p.add(mp); p.add(re);
+        p.add(l5); p.add(a1);
+        p.add(l6); p.add(a2);
+        p.add(l7); p.add(t5);
+
+        ai.addActionListener(this);
+        ci.addActionListener(this);
+        ad.addActionListener(this);
+        rm.addActionListener(this);
+        mp.addActionListener(this);
+        re.addActionListener(this);
+
+        f.add(p);
+        f.setSize(500, 650);
+        f.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        String s1 = t1.getText();
+        String s2 = t2.getText();
+        String s3 = t3.getText();
+        String item = t4.getText();
+
+        if (e.getSource() == ai)
+        {
+            if (s1.isEmpty() || s2.isEmpty() || s3.isEmpty())
+            {
+                t5.setText("Fill day, time and place");
+            }
+            else
+            {
+                a1.append("Day " + s1 + " | " + s2 + " | " + s3 + "\n");
+                t1.setText("");
+                t2.setText("");
+                t3.setText("");
+                t5.setText("Added to itinerary");
+            }
+        }
+        else if (e.getSource() == ci)
+        {
+            a1.setText("");
+            t5.setText("Itinerary cleared");
+        }
+        else if (e.getSource() == ad)
+        {
+            if (item.isEmpty())
+            {
+                t5.setText("Enter an item name");
+            }
+            else
+            {
+                a2.append("[ ] " + item + "\n");
+                t4.setText("");
+                t5.setText("Item added");
+            }
+        }
+        else if (e.getSource() == rm)
+        {
+            String s = a2.getText();
+            String line1 = "[ ] " + item + "\n";
+            String line2 = "[x] " + item + "\n";
+
+            if (s.contains(line1))
+            {
+                a2.setText(s.replace(line1, ""));
+                t5.setText("Item removed");
+            }
+            else if (s.contains(line2))
+            {
+                a2.setText(s.replace(line2, ""));
+                t5.setText("Item removed");
+            }
+            else
+            {
+                t5.setText("Item not found");
+            }
+        }
+        else if (e.getSource() == mp)
+        {
+            String s = a2.getText();
+            String line1 = "[ ] " + item + "\n";
+            String line2 = "[x] " + item + "\n";
+
+            if (s.contains(line1))
+            {
+                a2.setText(s.replace(line1, line2));
+                t5.setText("Marked as packed");
+            }
+            else
+            {
+                t5.setText("Item not found");
+            }
+        }
+        else if (e.getSource() == re)
+        {
+            t1.setText("");
+            t2.setText("");
+            t3.setText("");
+            t4.setText("");
+            t5.setText("");
+            a1.setText("");
+            a2.setText("");
+        }
+    }
+
+    public static void main(String args[])
+    {
+        new Vasudev();
+    }
+}
