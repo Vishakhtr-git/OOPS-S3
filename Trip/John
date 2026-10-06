@@ -1,1 +1,141 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
 
+public class John extends JFrame implements ActionListener
+{
+    JTextField t1, t2, t3, t4, t5, t6, t7;
+    JButton sh, re, se;
+
+    John()
+    {
+        JFrame f = new JFrame("TripMate - Recommendation");
+        JPanel p = new JPanel();
+        p.setLayout(new GridLayout(8, 2));
+
+        JLabel l1 = new JLabel("Budget per night");
+        t1 = new JTextField();
+        JLabel l2 = new JLabel("Hotel Category");
+        t2 = new JTextField();
+        JLabel l3 = new JLabel("Preference");
+        t3 = new JTextField();
+
+        JLabel l4 = new JLabel("Suggested Hotel");
+        t4 = new JTextField();
+        JLabel l5 = new JLabel("Tourist Place");
+        t5 = new JTextField();
+        JLabel l6 = new JLabel("Activity");
+        t6 = new JTextField();
+
+        sh = new JButton("Show Recommendations");
+        re = new JButton("Reset");
+        se = new JButton("Select");
+        t7 = new JTextField();
+
+        p.add(l1); p.add(t1);
+        p.add(l2); p.add(t2);
+        p.add(l3); p.add(t3);
+        p.add(l4); p.add(t4);
+        p.add(l5); p.add(t5);
+        p.add(l6); p.add(t6);
+        p.add(sh); p.add(re);
+        p.add(se); p.add(t7);
+
+        sh.addActionListener(this);
+        re.addActionListener(this);
+        se.addActionListener(this);
+
+        f.add(p);
+        f.setSize(450, 500);
+        f.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() == sh)
+        {
+            String s1 = t1.getText();
+            String s2 = t2.getText();
+            String s3 = t3.getText();
+
+            if (s1.isEmpty() || s2.isEmpty() || s3.isEmpty())
+            {
+                t7.setText("Please fill all fields");
+            }
+            else
+            {
+                int budget = Integer.parseInt(s1);
+
+                if (s2.equalsIgnoreCase("Budget"))
+                {
+                    t4.setText("Hotel Green Stay");
+                }
+                else if (s2.equalsIgnoreCase("Standard"))
+                {
+                    t4.setText("Hotel Blue Palm");
+                }
+                else if (s2.equalsIgnoreCase("Luxury"))
+                {
+                    if (budget < 5000)
+                    {
+                        t4.setText("Budget too low for Luxury");
+                    }
+                    else
+                    {
+                        t4.setText("Grand Royal Resort");
+                    }
+                }
+                else
+                {
+                    t4.setText("Enter Budget, Standard or Luxury");
+                }
+
+                if (s3.equalsIgnoreCase("Nature"))
+                {
+                    t5.setText("Eravikulam National Park");
+                    t6.setText("Nature Walk");
+                }
+                else if (s3.equalsIgnoreCase("Adventure"))
+                {
+                    t5.setText("Wagamon Hills");
+                    t6.setText("Paragliding");
+                }
+                else if (s3.equalsIgnoreCase("Beach"))
+                {
+                    t5.setText("Kovalam Beach");
+                    t6.setText("Surfing");
+                }
+                else if (s3.equalsIgnoreCase("Culture"))
+                {
+                    t5.setText("Mysore Palace");
+                    t6.setText("Heritage Walk");
+                }
+                else
+                {
+                    t5.setText("Enter Nature, Adventure, Beach or Culture");
+                    t6.setText("");
+                }
+                t7.setText("");
+            }
+        }
+        else if (e.getSource() == se)
+        {
+            t7.setText("Selected: " + t4.getText());
+        }
+        else if (e.getSource() == re)
+        {
+            t1.setText("");
+            t2.setText("");
+            t3.setText("");
+            t4.setText("");
+            t5.setText("");
+            t6.setText("");
+            t7.setText("");
+        }
+    }
+
+    public static void main(String args[])
+    {
+        new John();
+    }
+}
